@@ -15,7 +15,7 @@ import wave
 import httpx
 from wyoming.audio import AudioChunk, AudioStart, AudioStop
 from wyoming.event import Event
-from wyoming.info import Info
+from wyoming.info import Describe, Info
 from wyoming.server import AsyncEventHandler
 from wyoming.tts import Synthesize
 
@@ -66,7 +66,7 @@ class VoxtralTtsHandler(AsyncEventHandler):
             await self._synthesize(synthesize.text, voice)
             return True
 
-        if Info.is_type(event.type):
+        if Describe.is_type(event.type):
             self.write_event(self.wyoming_info.event())
             return True
 
