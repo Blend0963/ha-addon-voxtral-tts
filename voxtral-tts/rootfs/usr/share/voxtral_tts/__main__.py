@@ -16,52 +16,67 @@ from .handler import VoxtralTtsHandler
 
 _LOGGER = logging.getLogger(__name__)
 
+_ATTRIBUTION = Attribution(name="Mistral AI", url="https://mistral.ai")
+
+
+def _voice(name: str, description: str, languages: list[str]) -> TtsVoice:
+    """Crée une TtsVoice avec les champs requis par wyoming 1.5."""
+    return TtsVoice(
+        name=name,
+        description=description,
+        attribution=_ATTRIBUTION,
+        installed=True,
+        version="1.0",
+        languages=languages,
+    )
+
+
 # Voix prédéfinies Voxtral par langue
 VOICES_BY_LANGUAGE: dict[str, list[TtsVoice]] = {
     "fr": [
-        TtsVoice(name="french_female", description="Française (femme)", languages=["fr"]),
-        TtsVoice(name="french_male", description="Français (homme)", languages=["fr"]),
+        _voice("french_female", "Française (femme)", ["fr"]),
+        _voice("french_male", "Français (homme)", ["fr"]),
     ],
     "en": [
-        TtsVoice(name="british_female", description="British (female)", languages=["en"]),
-        TtsVoice(name="british_male", description="British (male)", languages=["en"]),
-        TtsVoice(name="neutral_female", description="Neutral (female)", languages=["en"]),
-        TtsVoice(name="neutral_male", description="Neutral (male)", languages=["en"]),
+        _voice("british_female", "British (female)", ["en"]),
+        _voice("british_male", "British (male)", ["en"]),
+        _voice("neutral_female", "Neutral (female)", ["en"]),
+        _voice("neutral_male", "Neutral (male)", ["en"]),
     ],
     "de": [
-        TtsVoice(name="german_female", description="Deutsche (Frau)", languages=["de"]),
-        TtsVoice(name="german_male", description="Deutscher (Mann)", languages=["de"]),
+        _voice("german_female", "Deutsche (Frau)", ["de"]),
+        _voice("german_male", "Deutscher (Mann)", ["de"]),
     ],
     "es": [
-        TtsVoice(name="spanish_female", description="Española (mujer)", languages=["es"]),
-        TtsVoice(name="spanish_male", description="Español (hombre)", languages=["es"]),
+        _voice("spanish_female", "Española (mujer)", ["es"]),
+        _voice("spanish_male", "Español (hombre)", ["es"]),
     ],
     "it": [
-        TtsVoice(name="italian_female", description="Italiana (donna)", languages=["it"]),
-        TtsVoice(name="italian_male", description="Italiano (uomo)", languages=["it"]),
+        _voice("italian_female", "Italiana (donna)", ["it"]),
+        _voice("italian_male", "Italiano (uomo)", ["it"]),
     ],
     "pt": [
-        TtsVoice(name="portuguese_female", description="Portuguesa (mulher)", languages=["pt"]),
-        TtsVoice(name="portuguese_male", description="Português (homem)", languages=["pt"]),
+        _voice("portuguese_female", "Portuguesa (mulher)", ["pt"]),
+        _voice("portuguese_male", "Português (homem)", ["pt"]),
     ],
     "nl": [
-        TtsVoice(name="dutch_female", description="Nederlandse (vrouw)", languages=["nl"]),
-        TtsVoice(name="dutch_male", description="Nederlands (man)", languages=["nl"]),
+        _voice("dutch_female", "Nederlandse (vrouw)", ["nl"]),
+        _voice("dutch_male", "Nederlands (man)", ["nl"]),
     ],
     "hi": [
-        TtsVoice(name="hindi_female", description="हिन्दी (महिला)", languages=["hi"]),
-        TtsVoice(name="hindi_male", description="हिन्दी (पुरुष)", languages=["hi"]),
+        _voice("hindi_female", "हिन्दी (महिला)", ["hi"]),
+        _voice("hindi_male", "हिन्दी (पुरुष)", ["hi"]),
     ],
     "ar": [
-        TtsVoice(name="arabic_female", description="عربية (أنثى)", languages=["ar"]),
-        TtsVoice(name="arabic_male", description="عربي (ذكر)", languages=["ar"]),
+        _voice("arabic_female", "عربية (أنثى)", ["ar"]),
+        _voice("arabic_male", "عربي (ذكر)", ["ar"]),
     ],
 }
 
 # Voix casual (disponibles quelle que soit la langue)
 CASUAL_VOICES = [
-    TtsVoice(name="casual_female", description="Casual (female)", languages=["fr", "en"]),
-    TtsVoice(name="casual_male", description="Casual (male)", languages=["fr", "en"]),
+    _voice("casual_female", "Casual (female)", ["fr", "en"]),
+    _voice("casual_male", "Casual (male)", ["fr", "en"]),
 ]
 
 
@@ -84,7 +99,7 @@ async def main() -> None:
 
     # Construction de la liste de voix annoncées
     if args.voice_id:
-        voices = [TtsVoice(name=args.voice_id, description=f"Voix custom ({args.voice_id})", languages=[args.language])]
+        voices = [_voice(args.voice_id, f"Voix custom ({args.voice_id})", [args.language])]
         _LOGGER.info("Mode voix custom : %s", args.voice_id)
     else:
         voices = list(VOICES_BY_LANGUAGE.get(args.language, [])) + CASUAL_VOICES
@@ -95,7 +110,7 @@ async def main() -> None:
             TtsProgram(
                 name="voxtral-tts",
                 description="Voxtral TTS (Mistral AI)",
-                attribution=Attribution(name="Mistral AI", url="https://mistral.ai"),
+                attribution=_ATTRIBUTION,
                 installed=True,
                 voices=voices,
             )
