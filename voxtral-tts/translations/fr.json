@@ -1,0 +1,28 @@
+{
+  "configuration": {
+    "mistral_api_key": {
+      "name": "Clé API Mistral",
+      "description": "Votre clé API Mistral AI"
+    },
+    "voice_id": {
+      "name": "ID de voix custom",
+      "description": "Identifiant optionnel d'une voix personnalisée Mistral"
+    },
+    "model": {
+      "name": "Modèle",
+      "description": "Modèle TTS Mistral à utiliser"
+    },
+    "response_format": {
+      "name": "Format audio",
+      "description": "Format audio demandé à l'API"
+    },
+    "language": {
+      "name": "Langue",
+      "description": "Langue des voix prédéfinies"
+    },
+    "wyoming_port": {
+      "name": "Port Wyoming",
+      "description": "Port TCP du serveur Wyoming"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+name: "Wyoming Voxtral TTS"
+description: "Synthèse vocale Voxtral (Mistral AI) via le protocole Wyoming pour Home Assistant Assist"
+version: "1.0.0"
+slug: wyoming_voxtral_tts
+url: "https://github.com/jefedi/ha-addon-voxtral-tts"
+arch:
+  - aarch64
+  - amd64
+  - armv7
+  - i386
+startup: application
+boot: auto
+ports:
+  10400/tcp: 10400
+ports_description:
+  10400/tcp: "Serveur Wyoming TTS"
+options:
+  mistral_api_key: ""
+  voice_id: ""
+  model: "voxtral-mini-tts-2603"
+  response_format: "wav"
+  language: "fr"
+  wyoming_port: 10400
+schema:
+  mistral_api_key: str
+  voice_id: str?
+  model: str
+  response_format: list(wav|mp3|pcm|flac|opus)
+  language: list(fr|en|de|es|nl|pt|it|hi|ar)
+  wyoming_port: port
+map:
+  - share:rw
