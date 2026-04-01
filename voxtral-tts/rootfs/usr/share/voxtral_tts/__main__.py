@@ -112,6 +112,7 @@ async def main() -> None:
                 description="Voxtral TTS (Mistral AI)",
                 attribution=_ATTRIBUTION,
                 installed=True,
+                version="1.0.4",
                 voices=voices,
             )
         ]
