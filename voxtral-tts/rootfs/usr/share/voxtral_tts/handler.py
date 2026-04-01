@@ -67,7 +67,7 @@ class VoxtralTtsHandler(AsyncEventHandler):
             return True
 
         if Describe.is_type(event.type):
-            self.write_event(self.wyoming_info.event())
+            await self.write_event(self.wyoming_info.event())
             return True
 
         return True
@@ -118,7 +118,7 @@ class VoxtralTtsHandler(AsyncEventHandler):
             return
 
         # Envoi via Wyoming
-        self.write_event(
+        await self.write_event(
             AudioStart(
                 rate=sample_rate,
                 width=VOXTRAL_SAMPLE_WIDTH,
@@ -129,7 +129,7 @@ class VoxtralTtsHandler(AsyncEventHandler):
         # Envoi par blocs
         for offset in range(0, len(pcm_data), AUDIO_CHUNK_SIZE):
             chunk = pcm_data[offset : offset + AUDIO_CHUNK_SIZE]
-            self.write_event(
+            await self.write_event(
                 AudioChunk(
                     audio=chunk,
                     rate=sample_rate,
@@ -138,7 +138,7 @@ class VoxtralTtsHandler(AsyncEventHandler):
                 ).event()
             )
 
-        self.write_event(AudioStop().event())
+        await self.write_event(AudioStop().event())
         _LOGGER.info("Synthèse terminée (%d octets PCM)", len(pcm_data))
 
     def _extract_pcm(self, audio_bytes: bytes) -> tuple[bytes | None, int]:
