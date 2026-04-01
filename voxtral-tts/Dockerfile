@@ -5,7 +5,8 @@ FROM ${BUILD_FROM}
 RUN apk add --no-cache \
     python3 \
     py3-pip \
-    ffmpeg
+    ffmpeg \
+    jq
 
 # Dépendances Python
 COPY requirements.txt /tmp/requirements.txt
@@ -18,4 +19,4 @@ COPY run.sh /
 
 RUN chmod a+x /run.sh
 
-ENTRYPOINT ["/init"]
+CMD ["/run.sh"]
