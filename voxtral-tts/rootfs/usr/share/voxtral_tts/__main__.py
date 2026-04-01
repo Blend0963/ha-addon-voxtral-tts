@@ -121,14 +121,24 @@ async def main() -> None:
     server = AsyncServer.from_uri(args.uri)
     _LOGGER.info("Serveur Wyoming Voxtral TTS démarré sur %s", args.uri)
 
-    await server.run(
-        partial(
-            VoxtralTtsHandler,
-            wyoming_info,
-            args,
+    try:
+        await server.run(
+            partial(
+                VoxtralTtsHandler,
+                wyoming_info,
+                args,
+            )
         )
-    )
+    except Exception:
+        _LOGGER.exception("Erreur fatale du serveur Wyoming")
+    finally:
+        _LOGGER.warning("server.run() terminé — maintien du processus actif")
+        # Garde le processus en vie si server.run() ne bloque pas
+        await asyncio.Event().wait()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass
