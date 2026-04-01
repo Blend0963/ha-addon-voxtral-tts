@@ -1,6 +1,6 @@
 name: "Wyoming Voxtral TTS"
 description: "Synthèse vocale Voxtral (Mistral AI) via le protocole Wyoming pour Home Assistant Assist"
-version: "1.0.5"
+version: "1.0.6"
 init: false
 slug: wyoming_voxtral_tts
 url: "https://github.com/jefedi/ha-addon-voxtral-tts"
@@ -11,6 +11,7 @@ arch:
   - i386
 startup: application
 boot: auto
+host_network: true
 ports:
   10400/tcp: 10400
 ports_description:
