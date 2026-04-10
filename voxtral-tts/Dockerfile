@@ -19,4 +19,4 @@ COPY run.sh /
 
 RUN chmod a+x /run.sh
 
-CMD ["/run.sh"]
+CMD ["/bin/sh", "-c", "exec /run.sh"]
