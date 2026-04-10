@@ -34,6 +34,12 @@ API_TIMEOUT = 60.0
 
 MISTRAL_API_URL = "https://api.mistral.ai/v1/audio/speech"
 
+# Voix par défaut valides selon la documentation Mistral
+DEFAULT_VOICES = {
+    "fr": ["casual_female", "casual_male"],
+    "en": ["casual_female", "casual_male"],
+    # Ajoute d'autres langues si nécessaire
+}
 
 class VoxtralTtsHandler(AsyncEventHandler):
     """Gestionnaire d'événements Wyoming pour la synthèse vocale Voxtral."""
@@ -61,7 +67,8 @@ class VoxtralTtsHandler(AsyncEventHandler):
             if not voice and synthesize.voice and synthesize.voice.name:
                 voice = synthesize.voice.name
             if not voice:
-                voice = "french_female"
+                # Utilise une voix par défaut valide
+                voice = DEFAULT_VOICES.get(self.cli_args.language, ["casual_female"])[0]
 
             await self._synthesize(synthesize.text, voice)
             return True
